@@ -1,0 +1,6 @@
+{
+  "name": "Rooftop Hunt",
+  "description": "3D online multiplayer rooftop chase and parkour game. Compete as Hunter vs Runner across 10 dangerous skyscraper maps with special abilities and dynamic obstacles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
