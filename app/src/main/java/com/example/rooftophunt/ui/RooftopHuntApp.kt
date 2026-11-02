@@ -350,7 +350,7 @@ fun MainMenuScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkBackground)
+            .background(Brush.verticalGradient(listOf(Color(0xFF050711), Color(0xFF10142A), Color(0xFF090B17))))
             .statusBarsPadding()
             .navigationBarsPadding()
             .padding(20.dp)
@@ -400,37 +400,9 @@ fun MainMenuScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Game Logo & Title
-            Box(
-                modifier = Modifier
-                    .size(90.dp)
-                    .clip(CircleShape)
-                    .background(Brush.radialGradient(listOf(NeonCyan, NeonPurple)))
-                    .border(2.dp, TextPrimary, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("🏃💨", fontSize = 42.sp)
-            }
+            CinematicHeroBanner(lang = lang)
 
-            Spacer(modifier = Modifier.height(14.dp))
-
-            Text(
-                text = LanguageManager.get("app_title", lang),
-                color = TextPrimary,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Black,
-                letterSpacing = 2.sp
-            )
-
-            Text(
-                text = LanguageManager.get("app_tagline", lang),
-                color = NeonCyan,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(22.dp))
 
             // Primary Play Action Button
             Button(
@@ -497,6 +469,89 @@ fun MainMenuScreen(
                     onClick = { onNavigate(AppScreen.SETTINGS) }
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+private fun CinematicHeroBanner(lang: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(184.dp)
+            .clip(RoundedCornerShape(26.dp))
+            .background(Brush.linearGradient(listOf(Color(0xFF111C38), Color(0xFF21113F), Color(0xFF080B18))))
+            .border(1.dp, NeonCyan.copy(alpha = 0.42f), RoundedCornerShape(26.dp))
+            .padding(18.dp)
+    ) {
+        Column(Modifier.align(Alignment.TopStart)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.size(7.dp).clip(CircleShape).background(NeonCyan))
+                Spacer(Modifier.width(7.dp))
+                Text("ONLINE ROOFTOP SURVIVAL", color = NeonCyan, fontSize = 9.sp, fontWeight = FontWeight.Black, letterSpacing = 1.2.sp)
+            }
+            Spacer(Modifier.height(10.dp))
+            Text(
+                text = LanguageManager.get("app_title", lang).uppercase(),
+                color = TextPrimary,
+                fontSize = 27.sp,
+                fontWeight = FontWeight.Black,
+                letterSpacing = 1.5.sp,
+                maxLines = 1
+            )
+            Text(
+                text = LanguageManager.get("app_tagline", lang),
+                color = Color(0xFFB7C3E4),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = .8.sp,
+                maxLines = 2
+            )
+        }
+
+        Row(
+            modifier = Modifier.align(Alignment.BottomEnd).height(66.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            listOf(30, 47, 38, 62, 44, 55, 34).forEachIndexed { index, height ->
+                Box(
+                    Modifier.width(if (index == 3) 24.dp else 17.dp)
+                        .height(height.dp)
+                        .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp))
+                        .background(
+                            Brush.verticalGradient(
+                                listOf(
+                                    if (index % 2 == 0) NeonCyan.copy(alpha = .55f) else NeonPurple.copy(alpha = .72f),
+                                    Color(0xFF10162B)
+                                )
+                            )
+                        )
+                        .border(.5.dp, NeonCyan.copy(alpha = .18f), RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp))
+                )
+            }
+        }
+        Icon(
+            imageVector = Icons.Default.FlashOn,
+            contentDescription = null,
+            tint = NeonCyan.copy(alpha = .18f),
+            modifier = Modifier.align(Alignment.BottomStart).size(54.dp)
+        )
+        Surface(
+            color = Color(0xFF0A1022).copy(alpha = .88f),
+            shape = RoundedCornerShape(30.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, NeonPurple.copy(alpha = .55f)),
+            modifier = Modifier.align(Alignment.BottomStart)
+        ) {
+            Text(
+                "HUNTER  VS  RUNNER",
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                color = Color(0xFFD8CBFF),
+                fontSize = 8.sp,
+                fontWeight = FontWeight.Black,
+                letterSpacing = .8.sp
+            )
         }
     }
 }
