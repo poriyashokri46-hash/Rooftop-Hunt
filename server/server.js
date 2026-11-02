@@ -220,6 +220,8 @@ wss.on("connection", ws => {
     const { room, player } = entry;
     clients.delete(ws);
     room.players.delete(player.pid);
+    // Keep seat assignment deterministic after a disconnect/rejoin.
+    [...room.players.values()].forEach((remaining, index) => { remaining.seat = index; });
     broadcast(room, { type: "OPPONENT_LEFT", room: room.code });
     if (room.players.size === 0) stopRoom(room);
     else {
