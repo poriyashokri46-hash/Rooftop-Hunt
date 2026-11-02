@@ -111,7 +111,20 @@ fun RooftopHuntApp() {
             }
 
             networkManager.onCaptureEvent = { hunterId, runnerId ->
-                activeEngine?.onNotification?.invoke("Capture confirmed over network!")
+                activeEngine?.onNotification?.invoke("Capture confirmed by server!")
+            }
+            networkManager.onRoundSync = { round, time ->
+                activeEngine?.let { engine ->
+                    if (engine.currentRound == round) {
+                        engine.roundTimeRemaining = time
+                    }
+                }
+            }
+            networkManager.onMatchFinished = {
+                activeEngine?.onNotification?.invoke("Match finished on server")
+            }
+            networkManager.onOpponentLeft = {
+                activeEngine?.onNotification?.invoke("Opponent disconnected")
             }
 
             var netSyncTimer = 0f
