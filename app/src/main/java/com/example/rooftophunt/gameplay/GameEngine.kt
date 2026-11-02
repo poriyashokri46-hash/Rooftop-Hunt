@@ -67,16 +67,12 @@ class GameEngine(
         // Round 2: A=Runner, B=Hunter
         // Round 3: A=Hunter, B=Runner
         // Round 4: A=Runner, B=Hunter
-        when (currentRound) {
-            1, 3 -> {
-                playerA.role = PlayerRole.HUNTER
-                playerB.role = PlayerRole.RUNNER
-            }
-            2, 4 -> {
-                playerA.role = PlayerRole.RUNNER
-                playerB.role = PlayerRole.HUNTER
-            }
-        }
+        // Each device controls its own Player A. The host owns canonical seat 0;
+        // the guest owns seat 1, so their local role is the inverse each round.
+        val hostSeatIsHunter = currentRound == 1 || currentRound == 3
+        val localIsHunter = if (isMultiplayerHost) hostSeatIsHunter else !hostSeatIsHunter
+        playerA.role = if (localIsHunter) PlayerRole.HUNTER else PlayerRole.RUNNER
+        playerB.role = if (localIsHunter) PlayerRole.RUNNER else PlayerRole.HUNTER
 
         playerA.health = 100
         playerB.health = 100
