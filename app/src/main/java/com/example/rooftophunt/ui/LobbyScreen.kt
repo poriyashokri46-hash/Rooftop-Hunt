@@ -225,7 +225,7 @@ fun LobbyScreen(
                                         NetworkConnectionState.CONNECTING -> "Connecting to server..."
                                         NetworkConnectionState.WAITING_FOR_PLAYER -> "Room Code [${networkManager.currentRoomCode}] Waiting for Player 2..."
                                         NetworkConnectionState.CONNECTED -> "Player connected! Starting match..."
-                                        NetworkConnectionState.ERROR -> "Connection error. Retrying..."
+                                        NetworkConnectionState.ERROR -> "Connection failed. Check server and try again."
                                         else -> ""
                                     },
                                     color = TextSecondary,
