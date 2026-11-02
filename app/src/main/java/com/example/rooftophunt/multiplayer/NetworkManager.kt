@@ -92,9 +92,13 @@ class NetworkManager(
         try {
             val json = JSONObject(text)
             val msgRoom = json.optString("room", "")
-            if (msgRoom.isNotEmpty() && msgRoom != currentRoomCode) return
+            val messageType = json.optString("type", "")
+            // Quick matchmaking assigns a server-generated room code after joining.
+            if (msgRoom.isNotEmpty() && msgRoom != currentRoomCode &&
+                messageType != "WAITING_FOR_PLAYER" && messageType != "ROOM_READY"
+            ) return
 
-            when (json.optString("type", "")) {
+            when (messageType) {
                 "WAITING_FOR_PLAYER" -> {
                     currentRoomCode = json.optString("room", currentRoomCode)
                     updateState(NetworkConnectionState.WAITING_FOR_PLAYER)
