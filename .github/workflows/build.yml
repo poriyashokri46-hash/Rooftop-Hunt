@@ -1,0 +1,35 @@
+name: Android and multiplayer server checks
+
+on:
+  push:
+    branches: [main, feature/real-multiplayer]
+  pull_request:
+    branches: [main]
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install server dependencies
+        working-directory: server
+        run: npm install
+      - name: Check server syntax
+        run: node --check server/server.js
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.1.1
+      - name: Build debug APK
+        run: gradle assembleDebug
