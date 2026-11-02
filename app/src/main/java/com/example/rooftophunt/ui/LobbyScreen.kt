@@ -245,7 +245,7 @@ fun LobbyScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            networkManager.createOrJoinRoom("MATCH", "Runner", "DEFAULT_HUNTER", asHost = true)
+                            networkManager.createOrJoinRoom("MATCH", "Runner", "DEFAULT_HUNTER", asHost = false)
                         }
                         .testTag("quick_match_card")
                 ) {
