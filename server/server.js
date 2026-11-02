@@ -102,6 +102,11 @@ function startRoom(room) {
   }, 100);
 }
 function sendRoomReady(room) {
+  if (room.phase === "WAITING") {
+    room.phase = "COUNTDOWN";
+    room.countdown = 3;
+    room.timeLeft = ROUND_SECONDS;
+  }
   const players = [...room.players.values()];
   for (const player of players) {
     const opponent = players.find(p => p.pid !== player.pid);
